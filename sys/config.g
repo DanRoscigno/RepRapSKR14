@@ -36,10 +36,19 @@ M208 X235 Y235 Z260 S0                         ; set axis maxima
 ; Endstops
 M574 X1 S1 P"xstop"                            ; configure active-high endstop for low end on X via pin xstop
 M574 Y1 S1 P"ystop"                            ; configure active-high endstop for low end on Y via pin ystop
-M574 Z1 S1 P"zstop"                            ; configure active-high endstop for low end on Z via pin zstop
+; replace with BLTouch
+;M574 Z1 S1 P"zstop"                            ; configure active-high endstop for low end on Z via pin zstop
+M574 Z1 S2                                     ; configure Z-probe endstop for low end on Z
 
 ; Z-Probe
-M558 P0 H5 F120 T6000                          ; disable Z probe but set dive height, probe speed and travel speed
+; replace with BLTouch
+;M558 P0 H5 F120 T6000                          ; disable Z probe but set dive height, probe speed and travel speed
+;M557 X15:215 Y15:195 S20                       ; define mesh grid
+
+; Z-Probe
+M950 S0 C"servo0"                              ; create servo pin 0 for BLTouch
+M558 P9 C"^probe" H5 F120 T6000                ; set Z probe type to bltouch and the dive height + speeds
+G31 P500 X10 Y40 Z2.5                          ; set Z probe trigger value, offset and trigger height
 M557 X15:215 Y15:195 S20                       ; define mesh grid
 
 ; Heaters
