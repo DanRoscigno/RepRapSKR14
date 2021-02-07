@@ -36,20 +36,14 @@ M208 X235 Y235 Z260 S0                         ; set axis maxima
 ; Endstops
 M574 X1 S1 P"xstop"                            ; configure active-high endstop for low end on X via pin xstop
 M574 Y1 S1 P"ystop"                            ; configure active-high endstop for low end on Y via pin ystop
-; replace with BLTouch
-;M574 Z1 S1 P"zstop"                            ; configure active-high endstop for low end on Z via pin zstop
 M574 Z1 S2                                     ; configure Z-probe endstop for low end on Z
 
 ; Z-Probe
-; replace with BLTouch
-;M558 P0 H5 F120 T6000                          ; disable Z probe but set dive height, probe speed and travel speed
-;M557 X15:215 Y15:195 S20                       ; define mesh grid
-
-; Z-Probe
 M950 S0 C"servo0"                              ; create servo pin 0 for BLTouch
-M558 P9 C"^probe" H5 F120 T6000                ; set Z probe type to bltouch and the dive height + speeds
-G31 P500 X10 Y40 Z2.5                          ; set Z probe trigger value, offset and trigger height
-M557 X15:215 Y15:195 S20                       ; define mesh grid
+M558 P9 H6 F120 T8000 C"^probe"                ; set Z probe type to bltouch and the dive height + speeds
+G31 P500 X-40.9 Y12 Z3.453                     ; set Z probe trigger value, offset and trigger height
+M557 X5:210 Y25:220 S20                        ; define mesh grid
+G29 S1                                         ; load mesh from /sys/heightmap.csv
 
 ; Heaters
 M308 S0 P"bedtemp" Y"thermistor" T100000 B4092 ; configure sensor 0 as thermistor on pin bedtemp
@@ -76,4 +70,3 @@ G10 P0 R0 S0                                   ; set initial tool 0 active and s
 
 ; Miscellaneous
 M501                                           ; load saved parameters from non-volatile memory
-
