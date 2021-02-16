@@ -22,11 +22,12 @@ M569 P2 S1                                     ; physical drive 2 goes forwards 
 M569 P3 S0                                     ; physical drive 3 goes backwards using default driver timings
 M584 X0 Y1 Z2 E3                               ; set drive mapping
 M350 X16 Y16 Z16 E16 I1                        ; configure microstepping with interpolation
-M92 X80.00 Y80.00 Z400.00 E93.00               ; set steps per mm
-M566 X1200.00 Y1200.00 Z24.00 E300.00          ; set maximum instantaneous speed changes (mm/min)
+M92 X80.00 Y80.00 Z400.00 E142.50              ; set steps per mm
+;M566 X1200.00 Y1200.00 Z24.00 E300.00          ; set maximum instantaneous speed changes (mm/min)
+M566 X480.00 Y480.00 Z24.00 E300.00            ; set maximum instantaneous speed changes (mm/min) (Copied from creawesome mod)
 M203 X9000.00 Y9000.00 Z1800.00 E6000.00       ; set maximum speeds (mm/min)
 M201 X500.00 Y500.00 Z100.00 E5000.00          ; set accelerations (mm/s^2)
-M906 X800 Y800 Z800 E1000 I50                  ; set motor currents (mA) and motor idle factor in per cent
+M906 X550 Y550 Z550 E650 I50                   ; set motor currents (mA) and motor idle factor in per cent
 M84 S30                                        ; Set idle timeout
 
 ; Axis Limits
@@ -41,7 +42,7 @@ M574 Z1 S2                                     ; configure Z-probe endstop for l
 ; Z-Probe
 M950 S0 C"servo0"                              ; create servo pin 0 for BLTouch
 M558 P9 H6 F120 T8000 C"^probe"                ; set Z probe type to bltouch and the dive height + speeds
-G31 P500 X-40.9 Y12 Z3.453                     ; set Z probe trigger value, offset and trigger height
+G31 P500 X-40.9 Y12 Z3.075                     ; set Z probe trigger value, offset and trigger height
 M557 X5:210 Y25:220 S20                        ; define mesh grid
 G29 S1                                         ; load mesh from /sys/heightmap.csv
 
@@ -60,6 +61,8 @@ M143 H1 S275                                   ; set temperature limit for heate
 ; Fans
 M950 F0 C"fan0" Q500                           ; create fan 0 on pin fan0 and set its frequency
 M106 P0 S0 H-1                                 ; set fan 0 value. Thermostatic control is turned off
+M950 F1 C"e1heat" Q500                         ; create fan 1 on pin out4 and set its frequency
+M106 P1 S1 H1 T45                              ; set fan 1 value. Thermostatic control is turned on
 
 ; Tools
 M563 P0 D0 H1 F0                               ; define tool 0
